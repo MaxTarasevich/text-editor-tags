@@ -27,6 +27,10 @@ function App() {
     setData((prevData) => [...prevData, dataObj])
   }
 
+  function deleteDataHandler(id: number) {
+    setData((prevData) => prevData.filter((el) => el.id !== id))
+  }
+
   return (
     <main className="app container">
       <h1>Text editor with tags</h1>
@@ -34,7 +38,7 @@ function App() {
       <Input onAddData={addDataHandler} />
 
       <Card>Tags for sorting</Card>
-      <Notes data={data} />
+      <Notes data={data} onDeleteData={deleteDataHandler}/>
     </main>
   )
 }

@@ -7,14 +7,17 @@ import './Notes.scss'
 
 interface Props {
   data: Data[]
+  onDeleteData: (id: number) => void
 }
 
-const Notes: FC<Props> = ({ data }) => {
+const Notes: FC<Props> = ({ data, onDeleteData }) => {
   return (
     <Card className="notes">
       {data.length
-        ? data.map((el) => <Note key={el.id} {...el} />)
-        : 'Loading...'}
+        ? data.map((el) => (
+            <Note key={el.id} {...el} onDeleteData={onDeleteData} />
+          ))
+        : 'You don`t have any notes'}
     </Card>
   )
 }
