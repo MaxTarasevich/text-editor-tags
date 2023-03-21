@@ -12,6 +12,7 @@
     font-family: 'Yellowtail', cursive;
     font-size: 20px;
     letter-spacing: 1.5px;
+    word-wrap: break-word;
     color: rgb(7, 7, 7);
     &::first-letter {
       text-transform: uppercase;
@@ -25,12 +26,12 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 20%;
+    gap: 10px 20%;
     font-size: 30px;
 
     svg {
       color: green;
-      transition: color 0.3s ease-in-out;
+      transition: color 0.3s ease-in;
       cursor: pointer;
       &:hover {
         color: red;

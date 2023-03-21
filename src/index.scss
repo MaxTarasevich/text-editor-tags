@@ -9,6 +9,14 @@ body {
   background-color: gray;
 }
 
+textarea,
+button {
+  outline: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
 .container {
   max-width: 1100px;
   margin: 0 auto;

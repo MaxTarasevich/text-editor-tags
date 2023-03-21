@@ -30,9 +30,9 @@ function App() {
   return (
     <main className="app container">
       <h1>Text editor with tags</h1>
-      <Card>
-        <Input onAddData={addDataHandler} />
-      </Card>
+
+      <Input onAddData={addDataHandler} />
+
       <Card>Tags for sorting</Card>
       <Notes data={data} />
     </main>
