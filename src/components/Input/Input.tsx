@@ -1,24 +1,46 @@
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import Card from '../Card/Card'
 
 import './Input.scss'
 
 interface Props {
-  onAddData: (newData: string) => void
+  id?: number
+  noteText?: string
+  onAddData?: (newData: string) => void
+  onEditData?: (id: number, newText: string) => void
+  onToggleEdit?: () => void
 }
 
-const Input: FC<Props> = ({ onAddData }) => {
+const Input: FC<Props> = ({
+  onAddData,
+  noteText,
+  onEditData,
+  id,
+  onToggleEdit,
+}) => {
   const textValue = useRef<HTMLTextAreaElement | null>(null)
 
   const [text, setText] = useState('')
   const [count, setCount] = useState(0)
 
+  useEffect(() => {
+    textValue.current?.focus()
+    noteText && setText(noteText)
+  }, [])
+
   function onClickHandler() {
-    if (text.trim().length) {
-      onAddData(text)
-      textValue.current?.focus()
-      setText('')
-      setCount(0)
+    if (onAddData) {
+      if (text.trim().length) {
+        onAddData(text)
+        textValue.current?.focus()
+        setText('')
+        setCount(0)
+      }
+    }
+
+    if (onEditData && id && onToggleEdit) {
+      onEditData(id, text)
+      onToggleEdit()
     }
   }
 
