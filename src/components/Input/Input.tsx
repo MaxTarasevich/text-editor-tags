@@ -1,4 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react'
+
+import { ActionType } from '../../interface/actions-type'
+
 import Card from '../Card/Card'
 
 import './Input.scss'
@@ -6,21 +9,22 @@ import './Input.scss'
 interface Props {
   id?: number
   noteText?: string
-  onAddData?: (newData: string) => void
-  onEditData?: (id: number, newText: string) => void
   onToggleEdit?: () => void
+  updateNotes: React.Dispatch<ActionType>
+  edit?: boolean
 }
 
 const Input: FC<Props> = ({
-  onAddData,
   noteText,
-  onEditData,
+  updateNotes,
+  edit,
   id,
   onToggleEdit,
 }) => {
   const textValue = useRef<HTMLTextAreaElement | null>(null)
 
   const [text, setText] = useState('')
+
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -29,18 +33,16 @@ const Input: FC<Props> = ({
   }, [])
 
   function onClickHandler() {
-    if (onAddData) {
+    if (edit && id && noteText && onToggleEdit) {
+      updateNotes({ type: 'edit', payload: { id: id, newText: text } })
+      onToggleEdit()
+    } else {
       if (text.trim().length) {
-        onAddData(text)
+        updateNotes({ type: 'add', payload: text })
         textValue.current?.focus()
         setText('')
         setCount(0)
       }
-    }
-
-    if (onEditData && id && onToggleEdit) {
-      onEditData(id, text)
-      onToggleEdit()
     }
   }
 

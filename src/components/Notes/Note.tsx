@@ -1,6 +1,9 @@
 import { FC, useState } from 'react'
 
 import { RiDeleteBin5Line, RiEditLine } from 'react-icons/ri'
+
+import { ActionType } from '../../interface/actions-type'
+
 import Input from '../Input/Input'
 
 import './Note.scss'
@@ -8,11 +11,10 @@ import './Note.scss'
 interface Props {
   id: number
   text: string
-  onDeleteData: (id: number) => void
-  onEditData: (id: number, newText: string) => void
+  updateNotes: React.Dispatch<ActionType>
 }
 
-const Note: FC<Props> = ({ id, text, onDeleteData, onEditData }) => {
+const Note: FC<Props> = ({ id, text, updateNotes }) => {
   const [edit, setEdit] = useState(false)
 
   const random = ((3 - -3) * Math.random() + -3).toFixed(2)
@@ -21,13 +23,18 @@ const Note: FC<Props> = ({ id, text, onDeleteData, onEditData }) => {
     setEdit((prevEdit) => !prevEdit)
   }
 
+  function deleteNoteHandler(id: number) {
+    updateNotes({ type: 'delete', payload: id })
+  }
+
   return (
     <div className="note" style={{ transform: `rotate(${random}deg)` }}>
       {edit ? (
         <>
           <Input
             noteText={text}
-            onEditData={onEditData}
+            updateNotes={updateNotes}
+            edit={edit}
             onToggleEdit={toggleEditHandler}
             id={id}
           />
@@ -36,7 +43,7 @@ const Note: FC<Props> = ({ id, text, onDeleteData, onEditData }) => {
         <>
           <p>{text}</p>
           <div className="note__icons">
-            <RiDeleteBin5Line onClick={() => onDeleteData(id)} />
+            <RiDeleteBin5Line onClick={() => deleteNoteHandler(id)} />
             <RiEditLine onClick={() => setEdit(!edit)} />
           </div>
         </>

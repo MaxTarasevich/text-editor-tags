@@ -1,5 +1,8 @@
 import { FC } from 'react'
+
+import { ActionType } from '../../interface/actions-type'
 import { Data } from '../../interface/data'
+
 import Card from '../Card/Card'
 import Note from './Note'
 
@@ -7,16 +10,15 @@ import './Notes.scss'
 
 interface Props {
   data: Data[]
-  onDeleteData: (id: number) => void
-  onEditData: (id: number, newText: string) => void
+  updateNotes: React.Dispatch<ActionType>
 }
 
-const Notes: FC<Props> = ({ data, onDeleteData, onEditData }) => {
+const Notes: FC<Props> = ({ data, updateNotes }) => {
   return (
     <Card className="notes">
       {data.length
         ? data.map((el) => (
-            <Note key={el.id} {...el} onDeleteData={onDeleteData} onEditData={onEditData}/>
+            <Note key={el.id} {...el} updateNotes={updateNotes} />
           ))
         : 'You don`t have any notes'}
     </Card>
