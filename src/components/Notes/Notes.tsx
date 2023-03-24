@@ -1,4 +1,5 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
+import tagsContext from '../../context/tags-context'
 
 import { ActionType } from '../../interface/actions-type'
 import { Data } from '../../interface/data'
@@ -14,9 +15,15 @@ interface Props {
 }
 
 const Notes: FC<Props> = ({ data, updateNotes }) => {
+  const context = useContext(tagsContext)
+
   return (
     <Card className="notes">
-      {data.length
+      {context?.sortedTags.sortedNotes.length
+        ? context.sortedTags.sortedNotes.map((el) => (
+            <Note key={el.id} {...el} updateNotes={updateNotes} />
+          ))
+        : data.length
         ? data.map((el) => (
             <Note key={el.id} {...el} updateNotes={updateNotes} />
           ))

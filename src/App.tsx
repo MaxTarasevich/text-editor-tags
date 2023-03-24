@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 import './App.scss'
 
@@ -9,39 +9,20 @@ import Input from './components/Input/Input'
 import Notes from './components/Notes/Notes'
 
 import { Data } from './interface/data'
-import { ActionType } from './interface/actions-type'
 
-function notesReduser(state: Data[], action: ActionType) {
-  switch (action.type) {
-    case 'load':
-      return action.payload
-    case 'add':
-      return [
-        ...state,
-        {
-          id: Number(new Date()),
-          text: action.payload,
-          tags: [''],
-        },
-      ]
-    case 'delete':
-      return state.filter((note) => note.id !== action.payload)
-    case 'edit':
-      return state.map((note) => {
-        if (note.id === action.payload.id) {
-          return { ...note, text: action.payload.newText }
-        }
-        return note
-      })
-    default:
-      return state
-  }
-}
+import { notesReduser } from './reduser/notesReduser'
+import Tags from './components/Tags/Tags'
+import tagsContext from './context/tags-context'
 
 function App() {
-  const initialState: Data[] = []
+  const initialReduserState: Data[] = []
 
-  const [notes, dispatchNotes] = useReducer(notesReduser, initialState)
+  const [notes, dispatchNotes] = useReducer(notesReduser, initialReduserState)
+
+  const [sortedByTags, setSortedByTags] = useState({
+    sortedNotes: initialReduserState,
+    tag: '',
+  })
 
   useEffect(() => {
     setTimeout(() => {
@@ -49,15 +30,48 @@ function App() {
     }, 500)
   }, [])
 
+  const tags = [...new Set(notes.map((note) => note.tags).flat())]
+
+  function sortByTagsHandler(tag: string) {
+    setSortedByTags({
+      sortedNotes: notes.filter((note) => note.tags.includes(tag)),
+      tag: tag,
+    })
+  }
+ 
   return (
     <main className="app container">
       <h1>Text editor with tags</h1>
 
       <Input updateNotes={dispatchNotes} />
 
-      <Card>Tags for sorting</Card>
+      <tagsContext.Provider
+        value={{
+          sortedTags: sortedByTags,
+          onsortByTags: sortByTagsHandler,
+        }}
+      >
+        <Card>
+          <Tags tags={tags} classNames="tags-bigFont" />
+          {sortedByTags.tag && (
+            <div className='tags-control'>
+              <div
+                onClick={() =>
+                  setSortedByTags({
+                    sortedNotes: initialReduserState,
+                    tag: '',
+                  })
+                }
+              >
+                View all
+              </div>
+              <div>Sorted By : {sortedByTags.tag}</div>
+            </div>
+          )}
+        </Card>
 
-      <Notes data={notes} updateNotes={dispatchNotes} />
+        <Notes data={notes} updateNotes={dispatchNotes} />
+      </tagsContext.Provider>
     </main>
   )
 }

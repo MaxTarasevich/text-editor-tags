@@ -7,16 +7,21 @@
   {
     "id": 2,
     "text": "delectus aut autem",
-    "tags": ["#shop", "#market", "#goto"]
+    "tags": ["#shop", "#market"]
   },
   {
     "id": 3,
     "text": "delectus aut autem",
-    "tags": ["#shop", "#market", "#goto"]
+    "tags": ["#shop"]
   },
   {
     "id": 4,
     "text": "delectus aut autem",
-    "tags": ["#shop", "#market", "#goto"]
+    "tags": ["#lalala"]
+  },
+  {
+    "id": 5,
+    "text": "Lorm ipsun lkdlsa",
+    "tags": []
   }
 ]
