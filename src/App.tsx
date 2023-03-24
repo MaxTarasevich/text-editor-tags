@@ -2,16 +2,14 @@ import { useEffect, useReducer, useState } from 'react'
 
 import './App.scss'
 
-import dataJson from './data/data.json'
+import { Card, Input, Notes, Tags } from './components'
 
-import Card from './components/Card/Card'
-import Input from './components/Input/Input'
-import Notes from './components/Notes/Notes'
+import dataJson from './data/data.json'
 
 import { Data } from './interface/data'
 
 import { notesReduser } from './reduser/notesReduser'
-import Tags from './components/Tags/Tags'
+
 import tagsContext from './context/tags-context'
 
 function App() {
@@ -38,7 +36,7 @@ function App() {
       tag: tag,
     })
   }
- 
+
   return (
     <main className="app container">
       <h1>Text editor with tags</h1>
@@ -54,7 +52,7 @@ function App() {
         <Card>
           <Tags tags={tags} classNames="tags-bigFont" />
           {sortedByTags.tag && (
-            <div className='tags-control'>
+            <div className="tags-control">
               <div
                 onClick={() =>
                   setSortedByTags({

@@ -1,11 +1,12 @@
 import { FC, useContext } from 'react'
+import { Card, Note } from '..'
 import tagsContext from '../../context/tags-context'
 
 import { ActionType } from '../../interface/actions-type'
 import { Data } from '../../interface/data'
 
-import Card from '../Card/Card'
-import Note from './Note'
+
+
 
 import './Notes.scss'
 

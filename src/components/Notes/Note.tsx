@@ -1,11 +1,9 @@
 import { FC, useState } from 'react'
 
 import { RiDeleteBin5Line, RiEditLine } from 'react-icons/ri'
+import { Input, Tags } from '..'
 
 import { ActionType } from '../../interface/actions-type'
-
-import Input from '../Input/Input'
-import Tags from '../Tags/Tags'
 
 import './Note.scss'
 
